@@ -1,8 +1,7 @@
 # FloatOnKeyboardLayout
 
-FloatOnKeyboardLayout is a ViewGroup that auto push up when soft keyboard popup.
+FloatOnKeyboardLayout is a ViewGroup that auto push up when soft keyboard popups.
 
-[![](https://jitpack.io/v/chrisbanes/PhotoView.svg)](https://jitpack.io/#chrisbanes/PhotoView)
 
 ## Features
 - Make soft keyboard can not overlap you views.
