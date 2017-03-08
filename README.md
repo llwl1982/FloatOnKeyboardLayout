@@ -9,7 +9,11 @@ FloatOnKeyboardLayout is a ViewGroup that auto push up when soft keyboard popups
 
 # Gradle Dependency
 
-No, not at the moment
+Then, add the library to your module `build.gradle`
+```gradle
+dependencies {
+    compile 'im.ll:floatlayout:1.0.0'
+}
 
 
 ## Sample Usage
