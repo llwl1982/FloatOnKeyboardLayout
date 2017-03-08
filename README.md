@@ -7,14 +7,14 @@ FloatOnKeyboardLayout is a ViewGroup that auto push up when soft keyboard popups
 - Make soft keyboard can not overlap you views.
 - Only one simple class, not dependency other libs
 
-# Gradle Dependency
+## Gradle Dependency
 
 Then, add the library to your module `build.gradle`
 ```gradle
 dependencies {
     compile 'im.ll:floatlayout:1.0.0'
 }
-
+```
 
 ## Sample Usage
 In the layout xml files, simply add FloatOnKeyboardLayout as root element. There is only one child in FloatOnKeyboardLayout.  
