@@ -2,6 +2,7 @@
 
 FloatOnKeyboardLayout is a ViewGroup that auto push up when soft keyboard popups. Only one simple class, not dependency other libs
 
+![Art](https://github.com/llwl1982/FloatOnKeyboardLayout/blob/master/doc/demo.gif)
 
 ## Features
 - Cancel limit of only one child view.
@@ -59,16 +60,17 @@ In the layout xml files, simply add
 
 ```Java
 FloatOnKeyboardLayout floatOnKeyboardLayout = (FloatOnKeyboardLayout) findViewById(R.id.root_view);
-        floatOnKeyboardLayout.setAnchor(findViewById(R.id.anchor));
 
-        floatOnKeyboardLayout.setPopupListener(new FloatOnKeyboardLayout.OnKeyboardPopupListener() {
+floatOnKeyboardLayout.setAnchor(findViewById(R.id.anchor));
+
+floatOnKeyboardLayout.setPopupListener(new FloatOnKeyboardLayout.OnKeyboardPopupListener() {
             @Override
             public void onKeyboardPopup(boolean isPop) {
                 Toast.makeText(MainActivity.this, "popup: " + isPop, Toast.LENGTH_SHORT).show();
             }
         });
 
-        floatOnKeyboardLayout.setMarginKeyboard(100);
+floatOnKeyboardLayout.setMarginKeyboard(100);
 ```
 
 
