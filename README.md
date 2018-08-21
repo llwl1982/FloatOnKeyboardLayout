@@ -2,6 +2,7 @@
 
 FloatOnKeyboardLayout is a ViewGroup that auto push up when soft keyboard popups. Only one simple class, not dependency other libs
 
+![Art](https://github.com/llwl1982/FloatOnKeyboardLayout/blob/master/doc/demo.gif)
 
 ## Features
 - Cancel limit of only one child view.
