@@ -4,6 +4,8 @@ FloatOnKeyboardLayout is a ViewGroup that auto push up when soft keyboard popups
 
 ![Art](https://github.com/llwl1982/FloatOnKeyboardLayout/blob/master/doc/demo.gif)
 
+软键盘弹起始终不会覆盖指定的View，这个View通过设置anchor来指定。如果不设置anchor，那么整个屏幕会被软键盘顶上去。
+
 ## Features
 - Cancel limit of only one child view.
 - Add function of anchor
