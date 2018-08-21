@@ -16,12 +16,14 @@ import android.widget.RelativeLayout;
 
 public class FloatOnKeyboardLayout extends RelativeLayout {
 
-    private static final int ID_CHILD = R.id.id_autolayout;
-
     private Context mContext;
     private int mOldKeyboardHeight = -1;
     private int mNowKeyboardHeight = -1;
-    protected int mScreenHeight = 0;
+    private int mScreenHeight = 0;
+    private View mAnchor;
+    private int mMarginKeyboard = 0;
+    private int mAnchorOriginBottom;
+    private OnKeyboardPopupListener mListener;
 
     public FloatOnKeyboardLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -31,35 +33,29 @@ public class FloatOnKeyboardLayout extends RelativeLayout {
         setSoftKeyboardListener();
     }
 
-        @Override
-    public void addView(View child, int index, ViewGroup.LayoutParams params) {
-        int childSum = this.getChildCount();
-        if(childSum > 1) {
-            throw new IllegalStateException("can host only one direct child");
-        } else {
-            super.addView(child, index, params);
-            android.widget.RelativeLayout.LayoutParams paramsChild;
-            if(childSum == 0) {
-                if(child.getId() < 0) {
-                    child.setId(ID_CHILD);
-                }
+    public void setAnchor(View anchorView) {
+        mAnchor = anchorView;
+    }
 
-                paramsChild = (android.widget.RelativeLayout.LayoutParams)child.getLayoutParams();
-                paramsChild.addRule(12);
-                child.setLayoutParams(paramsChild);
-            } else if(childSum == 1) {
-                paramsChild = (android.widget.RelativeLayout.LayoutParams)child.getLayoutParams();
-                paramsChild.addRule(2, ID_CHILD);
-                child.setLayoutParams(paramsChild);
-            }
+    /**
+     * set margin of anchor and soft keyboard
+     * @param margin
+     */
+    public void setMarginKeyboard(int margin) {
+        mMarginKeyboard = margin;
+    }
 
-        }
+    public void setPopupListener(OnKeyboardPopupListener listener) {
+        mListener = listener;
     }
 
     private void setSoftKeyboardListener() {
         getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
+                // first time
+                initAnchorPosition();
+
                 Rect r = new Rect();
 
                 ((Activity) mContext).getWindow().getDecorView().getWindowVisibleDisplayFrame(r);
@@ -67,22 +63,64 @@ public class FloatOnKeyboardLayout extends RelativeLayout {
                 if (mScreenHeight == 0) {
                     mScreenHeight = r.bottom;
                 }
+
                 mNowKeyboardHeight = mScreenHeight - r.bottom;
 
                 if (mOldKeyboardHeight != -1 && mNowKeyboardHeight != mOldKeyboardHeight) {
-                    if (mNowKeyboardHeight > 0) {
-                        setChildViewPosition(mNowKeyboardHeight);
-                    } else {
-                        setChildViewPosition(mNowKeyboardHeight);
+                    handleKeyboardHeightChanged();
+                }
+
+                mOldKeyboardHeight = mNowKeyboardHeight;
+            }
+
+            private void handleKeyboardHeightChanged() {
+                if (mNowKeyboardHeight > 0) {
+                    keyboardPopup();
+
+                    if (mListener != null) {
+                        mListener.onKeyboardPopup(true);
+                    }
+                } else {
+                    keyboardClose();
+
+                    if (mListener != null) {
+                        mListener.onKeyboardPopup(false);
                     }
                 }
-                mOldKeyboardHeight = mNowKeyboardHeight;
+            }
 
+            private void keyboardClose() {
+                setChildViewPosition(0);
+            }
+
+            private void keyboardPopup() {
+                if (mAnchor == null) {
+                    setChildViewPosition(mNowKeyboardHeight);
+                } else {
+                    boolean isCover = (mScreenHeight - mNowKeyboardHeight < mAnchorOriginBottom + mMarginKeyboard);
+
+                    if (isCover) {
+                        int offsetY = mAnchorOriginBottom - (mScreenHeight - mNowKeyboardHeight) + mMarginKeyboard;
+                        setChildViewPosition(offsetY);
+                    }
+                }
+            }
+
+            private void initAnchorPosition() {
+                if (mOldKeyboardHeight == -1 && mAnchor != null) {
+                    int[] location = new int[2];
+                    mAnchor.getLocationInWindow(location);
+                    mAnchorOriginBottom = location[1] + mAnchor.getHeight();
+                }
+            }
+
+            private void setChildViewPosition(int offsetY) {
+                scrollTo(0, offsetY);
             }
         });
     }
 
-    private void setChildViewPosition(int keyboardHeight) {
-        scrollTo(0, keyboardHeight);
+    public interface OnKeyboardPopupListener {
+        void onKeyboardPopup(boolean isPop);
     }
 }

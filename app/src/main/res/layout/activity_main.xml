@@ -8,7 +8,7 @@
     <LinearLayout
         android:id="@+id/child_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <EditText
@@ -21,12 +21,11 @@
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="20dp"
+            android:layout_height="70dp"
             android:background="#FF33B5E5"
             android:gravity="center"
             android:text="Content"
             android:textColor="@android:color/white"
-            android:textSize="50sp"
             android:layout_weight="1"/>
 
         <EditText
@@ -41,18 +40,39 @@
             android:layout_alignParentBottom="true"
             android:text="EditText" />
 
-        <TextView
+        <LinearLayout
+            android:id="@+id/anchor"
             android:layout_width="match_parent"
-            android:layout_height="20dp"
-            android:background="#FF1234"
-            android:gravity="center"
-            android:text="Content"
-            android:textColor="@android:color/white"
-            android:textSize="50sp"
-            android:layout_weight="1"/>
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:background="#FF1234"
+                android:gravity="center"
+                android:text="Must show!"
+                android:textColor="@android:color/white"
+                android:textSize="50sp"
+                android:layout_weight="1"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#837"/>
+        </LinearLayout>
 
     </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#752"
+        android:gravity="center"
+        android:text="What ever"
+        android:textColor="@android:color/white"
+        android:textSize="50sp"
+        android:layout_below="@id/child_view"/>
 
 
 </github.ll.view.FloatOnKeyboardLayout>

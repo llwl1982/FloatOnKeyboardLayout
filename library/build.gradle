@@ -35,7 +35,7 @@ publish {
     userOrg = 'llwl1982'
     groupId = 'im.ll'
     artifactId = 'floatlayout'
-    publishVersion = '1.0.0'
+    publishVersion = '1.1.0'
     desc = 'The layout that always floating on soft keyboard'
     website = 'https://github.com/llwl1982/FloatOnKeyboardLayout'
 }
